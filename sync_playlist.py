@@ -1,8 +1,10 @@
 import os
+from configparser import ConfigParser
+
 import spotipy
 from mutagen.easyid3 import EasyID3
 from spotipy.oauth2 import SpotifyClientCredentials
-from configparser import ConfigParser
+
 
 config = ConfigParser()
 config.read("./config.ini")

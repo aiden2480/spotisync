@@ -1,3 +1,7 @@
+# My code stuff
+config.ini
+*.m3u8
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -109,7 +113,6 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-config.ini
 
 # Spyder project settings
 .spyderproject

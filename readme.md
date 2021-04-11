@@ -6,8 +6,8 @@
     <img  src="https://img.shields.io/badge/Python-3.9.1-1db954?style=flat-square"  alt="Python 3.9.1">
 </div>
 
-## What is `spotisync`?
-A small program making use of [spotDL](https://github.com/spotDL/spotify-downloader/) to download songs from a Spotify playlist and keep them in sync with a local folder. 
+## What is spotisync?
+A small program making use of [spotDL](https://github.com/spotDL/spotify-downloader/) to download songs from a Spotify playlist and keep them in sync with a local folder. Yes, I know it's written sloppily, but I'm focusing on getting it working first. It's still in development.
 
 ## Setup
 1. Set up Ffmpeg and install it to path. Binaries can be found [here](https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-full.7z) and an installation guide can be found [here](https://windowsloop.com/install-ffmpeg-windows-10/).

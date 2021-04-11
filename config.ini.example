@@ -1,6 +1,6 @@
 [SPOTIFY CREDENTIALS]
-; I got these two off the internet so they
-; may be invalidated and I won't maintain them.
+; I got these two off the internet so they may be
+; invalidated and I probably won't maintain them.
 ClientID = 5f573c9620494bae87890c0f08a60293
 ClientSecret = 212476d9b0f3472eaa762d90b19b0ba8
 
@@ -10,6 +10,9 @@ PlaylistURI =
 ; Replace with a folder path which the songs will be
 ; downloaded into (Leave out trailing backslash in filepath)
 PlaylistLocation = 
+; Location to save the `.m3u8` platlist file to (include whole path with filename)
+; This only needs to be set if running the `create_playlist.py` script.
+M3U8Location = 
 
 [CONFIG]
 ; This does nothing yet
