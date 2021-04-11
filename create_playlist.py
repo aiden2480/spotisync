@@ -11,6 +11,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 config = ConfigParser()
 config.read("./config.ini")
 loc = config["PLAYLIST"]["playlistlocation"]
+m3u8loc = config["PLAYLIST"]["m3u8location"]
 
 # Set up spotipy client
 creds = SpotifyClientCredentials(
@@ -33,5 +34,6 @@ for fp in local_filenames:
     print(" * Wrote", title)
 
 # Write to file
-with open(f"./{name.lower()}.m3u8", "w") as fp:
+with open(m3u8loc, "w") as fp:
     fp.write(quarantine)
+print(f"Wrote {name} ({len(local_filenames)} songs) to {m3u8loc}")
