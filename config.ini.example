@@ -1,0 +1,16 @@
+[SPOTIFY CREDENTIALS]
+; I got these two off the internet so they
+; may be invalidated and I won't maintain them.
+ClientID = 5f573c9620494bae87890c0f08a60293
+ClientSecret = 212476d9b0f3472eaa762d90b19b0ba8
+
+[PLAYLIST]
+; Replace this with the URI of the playlist
+PlaylistURI = 
+; Replace with a folder path which the songs will be
+; downloaded into (Leave out trailing backslash in filepath)
+PlaylistLocation = 
+
+[CONFIG]
+; This does nothing yet
+DeleteExpiredSongs = true
