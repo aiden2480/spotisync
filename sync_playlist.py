@@ -26,7 +26,7 @@ splist = list()
 for i in tracks:
     title = i["track"]["name"]
     artists = [o["name"] for o in i["track"]["artists"]]
-    splist.append(f"{title} - {'/'.join(artists)}")
+    splist.append(f"{'/'.join(artists)} - {title}")
 
 # Determine which files have already been downloaded locally
 lplist = list()
@@ -34,7 +34,7 @@ local_filenames = [f for f in os.listdir(LOCATION) if f.endswith(".mp3")]
 
 for file in local_filenames:
     audio = EasyID3(f"{LOCATION}\\{file}")
-    lplist.append(f"{audio['title'][0]} - {audio['artist'][0]}")
+    lplist.append(f"{audio['artist'][0]} - {audio['title'][0]}")
 
 # Compare spotify playlist with local one
 not_downloaded = [p for p in splist if p not in lplist]
@@ -52,6 +52,7 @@ for p in deleted:
     print(f" - {p}")
 if not deleted:
     print(" - None")
+print()
 
 # Gather the download URLs
 urls = list()
@@ -75,3 +76,8 @@ except FileNotFoundError:
     pass
 
 # TODO: Delete songs deleted from Spotify playlist
+if not config["CONFIG"]["deleteexpiredsongs"]:
+    exit(0)
+
+for song in deleted:
+    os.remove(f"{LOCATION}\\{song}.mp3")
