@@ -54,19 +54,9 @@ def download_playlist(url: str, loc: str) -> None:
     loc = loc.strip("\\").strip("/")
 
     # Online vs local songs
-    online = dict() # Format: song name: URL
-    local = dict() # Format: song name: location
-
-    for elem in songs:
-        title = elem["track"]["name"]
-        artists = [o["name"] for o in elem["track"]["artists"]]
-        online[f"{', '.join(artists)} - {title}"] = elem["track"]["external_urls"]["spotify"]
-    
-    for elem in [f for f in os.listdir(loc) if f.endswith(".mp3")]:
-        id3 = EasyID3(f"{loc}\\{elem}")
-        artist = ", ".join(id3["artist"][0].split("/"))
-        local[f"{artist} - {id3['title'][0]}"] = elem
-    
+    online = get_online(songs)  # Format: song name: URL
+    local = get_local(loc)      # Format: song name: location
+        
     not_downloaded = [i for i in online.keys() if i not in local.keys()]
     left_over = [i for i in local.keys() if i not in online.keys()]
 
@@ -84,10 +74,33 @@ def download_playlist(url: str, loc: str) -> None:
     
     # Regenerate M3U8 playlist file
     if not_downloaded or left_over:
-        generate_m3u8(data["name"].lower(), loc, local)
+        generate_m3u8(data["name"].lower(), loc, get_local(loc))
 
     # Playlist should be up to date
     logging.info("Playlist up to date")
+
+# Get online songs
+def get_online(songs: dict) -> dict:
+    online = dict()
+    
+    for elem in songs:
+        title = elem["track"]["name"]
+        artists = [o["name"] for o in elem["track"]["artists"]]
+        online[f"{', '.join(artists)} - {title}"] = elem["track"]["external_urls"]["spotify"]
+    
+    return online
+
+# Get local songs
+def get_local(loc: str) -> dict:
+    local = dict()
+    loc = loc.strip("\\").strip("/")
+
+    for elem in [f for f in os.listdir(loc) if f.endswith(".mp3")]:
+        id3 = EasyID3(f"{loc}\\{elem}")
+        artist = ", ".join(id3["artist"][0].split("/"))
+        local[f"{artist} - {id3['title'][0]}"] = elem
+    
+    return local
 
 # Get playlist data of the current playlist from spotify
 def get_playlist_data(url: str) -> dict:
@@ -114,6 +127,7 @@ def download_songs(query: list, loc: str) -> None:
 # Generate new M3U8 file
 def generate_m3u8(title: str, loc: str, songdata: dict) -> None:
     logging.info("Updating m3u8 file")
+    loc = loc.strip("\\").strip("/")
     m3u8 = f"#EXTM3U\n#PLAYLIST:{title}"
 
     for name, path in songdata.items():
