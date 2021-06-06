@@ -17,7 +17,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 
 
 # Get client ID and secret from spotdl source files
-def get_client_secrets():
+def get_client_secrets() -> dict:
     errormsg = "Couldn't grab credentials from spotdl, try reinstalling/upgrading it"
     pattern = re.compile("client_(?:id|secret) ?= ?(?:'|\")(\\w*)(?:'|\")")
     sauce = inspect.getsource(console_entry_point)
@@ -27,7 +27,7 @@ def get_client_secrets():
     return dict(zip(["client_id", "client_secret"], matches))
 
 # Looks for ffmpeg in the temp dir and downloads it if it can't find it
-def get_ffmpeg():
+def get_ffmpeg() -> str:
     logging.debug("[FFMPEG] Locating driver")
     for r, d, f in os.walk(tempfile.gettempdir()):
         for fil in f:
@@ -48,7 +48,7 @@ def get_ffmpeg():
     return temp.name
 
 # Download remaining songs in a playlist
-def download_playlist(url: str, loc: str):
+def download_playlist(url: str, loc: str) -> None:
     data = get_playlist_data(url)
     songs = data["tracks"]["items"]
     loc = loc.strip("\\").strip("/")
@@ -90,14 +90,14 @@ def download_playlist(url: str, loc: str):
     logging.info("Playlist up to date")
 
 # Get playlist data of the current playlist from spotify
-def get_playlist_data(url: str):
+def get_playlist_data(url: str) -> dict:
     spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(
         **get_client_secrets()
     ))
     return spotify.playlist(url)
 
 # Download a list of songs
-def download_songs(query: list, loc: str):
+def download_songs(query: list, loc: str) -> None:
     init_spotdl(loc.strip("\\").strip("/"))
     songs = list()
         
@@ -112,7 +112,8 @@ def download_songs(query: list, loc: str):
         os.rmdir("./Temp")
 
 # Generate new M3U8 file
-def generate_m3u8(title: str, loc: str, songdata: dict):
+def generate_m3u8(title: str, loc: str, songdata: dict) -> None:
+    logging.info("Updating m3u8 file")
     m3u8 = f"#EXTM3U\n#PLAYLIST:{title}"
 
     for name, path in songdata.items():
@@ -122,7 +123,7 @@ def generate_m3u8(title: str, loc: str, songdata: dict):
         fp.write(m3u8)
 
 # Initialise spotdl
-def init_spotdl(loc: str):
+def init_spotdl(loc: str) -> None:
     os.chdir(loc.strip("\\").strip("/"))
     SpotifyClient.init(user_auth=False, **get_client_secrets())
 
