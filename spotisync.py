@@ -41,7 +41,7 @@ def get_ffmpeg():
         driver = resp.content
     logging.debug("[FFMPEG] Driver downloaded, writing to disk")
 
-    with zipfile.NamedTemporaryFile(prefix="ffmpeg_", suffix=".exe", delete=False) as temp:
+    with tempfile.NamedTemporaryFile(prefix="ffmpeg_", suffix=".exe", delete=False) as temp:
         zf = zipfile.ZipFile(io.BytesIO(driver))
         temp.write(zf.open("ffmpeg.exe").read())
         logging.debug(f"[FFMPEG] Finished write: {temp.name}")
@@ -118,7 +118,7 @@ def generate_m3u8(title: str, loc: str, songdata: dict):
     for name, path in songdata.items():
         m3u8 += f"\n\n#EXTINF: -1, {name}\n{loc}\\{path}"
     
-    with open(f"{loc}\\{title}.m3u8", "w") as fp:
+    with open(f"{loc}\\{title}.m3u8", "w", encoding="utf8") as fp:
         fp.write(m3u8)
 
 # Initialise spotdl
