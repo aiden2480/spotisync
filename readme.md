@@ -8,7 +8,7 @@
 
 ## What is spotisync?
 A small program making use of [spotDL](https://github.com/spotDL/spotify-downloader/) to download songs from a Spotify playlist and keep them in sync with a local folder.
-It will download new songs and delete old songs as necessary. Through spotDL, it will also 
+It will download new songs and delete old songs as necessary. Through spotDL, it will also download metadata such as album art and lyrics where possible. 
 
 ## Setup
 1. Run `pip install -r requirements.txt` to install dependencies. Note that spotDL must be at least version [`3.6.0`](https://github.com/spotDL/spotify-downloader/issues/1251) due to changes in that version that allow the specification of the `--ffmpeg` flag so that the binaries don't have to be on PATH.
