@@ -123,6 +123,9 @@ def download_songs(query: list, loc: str) -> None:
     
     if os.path.exists("./Temp"):
         os.rmdir("./Temp")
+    
+    if os.path.exists("./.cache"):
+        os.remove("./.cache")
 
 # Generate new M3U8 file
 def generate_m3u8(title: str, loc: str, songdata: dict) -> None:
